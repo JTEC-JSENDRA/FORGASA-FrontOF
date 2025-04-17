@@ -1,0 +1,51 @@
+.container{
+    display: flex;
+    flex-direction: column;
+}
+
+.header{
+    background-color: #202020;
+    margin: 0%;
+    padding: 0%;
+    width: 100%;
+    height: 100%;
+}
+.main{
+    display: flex;
+    flex-direction: column;
+}
+
+.sub-main{
+    display: flex;
+    flex-direction: row;
+}
+
+.sub-container{
+    width: 100%;
+    margin: 10px;
+    border-radius: 5px;
+    background-color: #303030;
+
+}
+.header-btn{
+    padding: 0px;
+    margin: 5px;
+    width: 120px;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

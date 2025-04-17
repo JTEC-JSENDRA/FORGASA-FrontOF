@@ -1,0 +1,37 @@
+
+.cabecera-tabla{
+    display: flex;
+    position:   sticky;
+}
+
+.elemento-cabecera{
+    margin: 0%;
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.tabla-of{
+    max-height: 595px;
+    border-radius: 5px;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+.elemento-OF{
+    display: flex;
+}
+.elemento-elemento-OF{
+    margin: 0%;
+    margin-left: 5px;
+}
+.elemento-OF:hover{
+    background-color: #353535;
+    cursor: pointer;
+}
+
+
+.separador{
+    margin: 0%;
+    opacity: 0.2;
+}
