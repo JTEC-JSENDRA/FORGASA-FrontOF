@@ -14,7 +14,7 @@ export default function container_OF_Runing({OF_Lanzadas}){
     const width_Estado = "8%";
     const hasDatos = OF_Lanzadas?.length > 0
 
-    //console.log(OF_Lanzadas)
+    // console.log(OF_Lanzadas)
 
     return (
         <>
