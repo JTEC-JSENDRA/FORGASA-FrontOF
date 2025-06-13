@@ -14,7 +14,7 @@ function App() {
 
   setTimeout(() => {
     setRefrescar(!Refrescar);
-  }, 5000);
+  }, 55555000);
 
   // Función para lanzar OF
   const LanzarOF = async (Datos) => {

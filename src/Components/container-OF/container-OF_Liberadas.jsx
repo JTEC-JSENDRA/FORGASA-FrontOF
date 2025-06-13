@@ -21,6 +21,8 @@ export default function container_OF({OF_Liberadas, OF_Lanzadas, LanzarOF}){
   const width_Accion = "3.5%";
   const hasDatos = OF_Liberadas?.length > 0
   
+  console.log("OF_Liberadas recibidas:", OF_Liberadas);
+
   return(
       <>
         <div>
@@ -72,10 +74,23 @@ export default function container_OF({OF_Liberadas, OF_Lanzadas, LanzarOF}){
         const [selectedDestino, setSelectedDestino] = useState("");
         const [versiones, setVersiones] = useState([]); // Estado para las versiones obtenidas de la API
       
+          // Log completo de cada OrdenFabricacion
+          //console.log(`OrdenFabricacion[${index}] completa:\n`, JSON.stringify(OrdenFabricacion, null, 2));
+          
+          if (!OrdenFabricacion?.GMDix?.nombreReceta || OrdenFabricacion.GMDix.nombreReceta === "Vacio") {
+            console.warn(`⚠️ OF[${index}] SIN receta válida:`, OrdenFabricacion.AUFNR);
+          }
           // Llamar a la API cuando cambia la receta seleccionada
           useEffect(() => {
+            
             if (selectedReceta) {
+
+              const url = `http://localhost:7248/api/Liberadas/obtenerVersionesReceta?receta=${selectedReceta}`;
+              console.log("Receta seleccionada:", selectedReceta);
+              console.log("URL:", url);
+
               fetch(`http://localhost:7248/api/Liberadas/obtenerVersionesReceta?receta=${selectedReceta}`)
+               
               .then(response => {
                 if (!response.ok) {
                   throw new Error(`Error HTTP: ${response.status}`);
@@ -104,6 +119,7 @@ export default function container_OF({OF_Liberadas, OF_Lanzadas, LanzarOF}){
             selectedVersion: "0",
             selectedDestino: "--",
           });
+          console.log("Receta cambiada:", event.target.value);
         };
       
         const handleVersionChange = (event) => {
@@ -125,42 +141,107 @@ export default function container_OF({OF_Liberadas, OF_Lanzadas, LanzarOF}){
               item?.ARBPL === "FO111002" ||
               item?.ARBPL === "FO112001"
           );
+          //console.log(" - - - - - - - - ");
+          //console.log(tieneARBPL);
 
+          // DEBUG receta ->>>>> SALE VACÍO <<<<-
+          //console.log(`Receta cruda [${index}]:`, OrdenFabricacion.GMDix.nombreReceta);
+
+          //console.log(OrdenFabricacion.GMDix.nombreReceta);
+          //console.log("Datos para desplegable de receta:", OrdenFabricacion.GMDix.nombreReceta);
           // Renderiza solo si el estado es "Liberada" y contiene los ARBPL deseados
+
           return OrdenFabricacion.GMDix.estado === "Liberada" && tieneARBPL ? (
-            <li key={index} className='elemento-OF'>
-                <p className='elemento-elemento-OF' style={{ width: width_Orden }}>{parseInt(OrdenFabricacion.AUFNR, 10)}</p>
-                <hr className='separador' />
-                <p className='elemento-elemento-OF' style={{ width: width_Material }}>{parseInt(OrdenFabricacion.PLNBEZ, 10)}</p>
-                <hr className='separador' />
-                <p className='elemento-elemento-OF' style={{ width: width_TextoMaterial }}>{OrdenFabricacion.MAKTX}</p>
-                <hr className='separador' />
-                <p className='elemento-elemento-OF' style={{ width: width_Cantidad }}>{OrdenFabricacion.GAMNG}</p>
-                <hr className='separador' />
-                <p className='elemento-elemento-OF' style={{ width: width_Unidades }}>{OrdenFabricacion.GMEIN}</p>
-                <hr className='separador' />
-                <p className='elemento-elemento-OF' style={{ width: width_InicioFin }}>{OrdenFabricacion.GSTRS} / {OrdenFabricacion.GSUZS}</p>
-                <hr className='separador' />
-                <p className='elemento-elemento-OF' style={{ width: width_InicioFin }}>{OrdenFabricacion.GLTRS} / {OrdenFabricacion.GLUZS}</p>
-                <hr className='separador' />
-                <p className='elemento-elemento-OF' style={{ width: width_Alternativa }}>{OrdenFabricacion.STLAL}</p>
-                <hr className='separador' />
-                <p className='elemento-elemento-OF' style={{ width: width_Operacion }}>{OrdenFabricacion.GMDix.operacion}</p>
-                <hr className='separador' />
-                <p className='elemento-elemento-OF' style={{ width: width_Receta }}><Desplegable Datos={OrdenFabricacion.GMDix.nombreReceta} value={selectedReceta} onChange={handleRecetaChange}/></p>
-                <hr className='separador' />
-                <p className='elemento-elemento-OF' style={{ width: width_Version }}><Desplegable Datos={versiones} value={selectedVersion} onChange={handleVersionChange}/></p>
-                <hr className='separador' />
-                <p className='elemento-elemento-OF' style={{ width: width_Destino }}><Desplegable Datos={OrdenFabricacion.GMDix.nombreReactor} value={selectedDestino} onChange={handleDestinoChange}/></p>
-                <hr className='separador' />
-                <p className='elemento-elemento-OF' style={{ width: width_Accion }}><Boton Datos={OrdenFabricacion} LanzarOF={LanzarOF} Receta={selectedReceta} Version={selectedVersion} Destino={selectedDestino} ordenesLanzadas={OF_Lanzadas}/></p>
-                <hr className='separador' />
+            <li key={index} className="elemento-OF">
+              <p className="elemento-elemento-OF" style={{ width: width_Orden }}>
+                {parseInt(OrdenFabricacion.AUFNR, 10)}
+              </p>
+              <hr className="separador" />
+          
+              <p className="elemento-elemento-OF" style={{ width: width_Material }}>
+                {parseInt(OrdenFabricacion.PLNBEZ, 10)}
+              </p>
+              <hr className="separador" />
+          
+              <p className="elemento-elemento-OF" style={{ width: width_TextoMaterial }}>
+                {OrdenFabricacion.MAKTX}
+              </p>
+              <hr className="separador" />
+          
+              <p className="elemento-elemento-OF" style={{ width: width_Cantidad }}>
+                {OrdenFabricacion.GAMNG}
+              </p>
+              <hr className="separador" />
+          
+              <p className="elemento-elemento-OF" style={{ width: width_Unidades }}>
+                {OrdenFabricacion.GMEIN}
+              </p>
+              <hr className="separador" />
+          
+              <p className="elemento-elemento-OF" style={{ width: width_InicioFin }}>
+                {OrdenFabricacion.GSTRS} / {OrdenFabricacion.GSUZS}
+              </p>
+              <hr className="separador" />
+          
+              <p className="elemento-elemento-OF" style={{ width: width_InicioFin }}>
+                {OrdenFabricacion.GLTRS} / {OrdenFabricacion.GLUZS}
+              </p>
+              <hr className="separador" />
+          
+              <p className="elemento-elemento-OF" style={{ width: width_Alternativa }}>
+                {OrdenFabricacion.STLAL}
+              </p>
+              <hr className="separador" />
+          
+              <p className="elemento-elemento-OF" style={{ width: width_Operacion }}>
+                {OrdenFabricacion.GMDix.operacion}
+              </p>
+              <hr className="separador" />
+          
+              <p className="elemento-elemento-OF" style={{ width: width_Receta }}>
+                <Desplegable
+                  Datos={OrdenFabricacion.GMDix.nombreReceta}
+                  value={selectedReceta}
+                  onChange={handleRecetaChange}
+                />
+              </p>
+              <hr className="separador" />
+          
+              <p className="elemento-elemento-OF" style={{ width: width_Version }}>
+                <Desplegable
+                  Datos={versiones}
+                  value={selectedVersion}
+                  onChange={handleVersionChange}
+                />
+              </p>
+              <hr className="separador" />
+          
+              <p className="elemento-elemento-OF" style={{ width: width_Destino }}>
+                <Desplegable
+                  Datos={OrdenFabricacion.GMDix.nombreReactor}
+                  value={selectedDestino}
+                  onChange={handleDestinoChange}
+                />
+              </p>
+              <hr className="separador" />
+          
+              <p className="elemento-elemento-OF" style={{ width: width_Accion }}>
+                <Boton
+                  Datos={OrdenFabricacion}
+                  LanzarOF={LanzarOF}
+                  Receta={selectedReceta}
+                  Version={selectedVersion}
+                  Destino={selectedDestino}
+                  ordenesLanzadas={OF_Lanzadas}
+                />
+              </p>
+              <hr className="separador" />
             </li>
           ) : null;
-      })
+    })
       : <p style={{ textAlign: "center" }}>Cargando datos</p>
-  }
-</div>
-      </>
+    }
+    </div>
+    </>
   )
 }
