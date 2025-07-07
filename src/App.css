@@ -1,51 +1,271 @@
-.container{
+/* Contenedor principal que ocupa toda la pantalla */
+.container {
     display: flex;
     flex-direction: column;
-}
-
-.header{
-    background-color: #202020;
-    margin: 0%;
-    padding: 0%;
-    width: 100%;
-    height: 100%;
-}
-.main{
+    min-height: 100vh;
+    background-color: var(--Blanco);
+    color: var(--Negro);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    width: 100vw;
+    overflow-x: hidden;
+  }
+  
+  /* Header */
+  .header {
+    background-color: var(--Naranja);
+    width: 100vw;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--Blanco);
+    user-select: none;
+    box-shadow: 0 3px 8px rgba(253, 152, 0, 0.5);
+    margin: 0;
+  }
+  
+  /* Header título */
+  .header > h1 {
+    margin: 0 auto;
+    pointer-events: none;
+  }
+  
+  /* Botones de recarga */
+  .reload-button,
+  .reload-button-SAP {
+    background-color: var(--Azul);
+    color: var(--Blanco);
+    padding: 6px 12px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    position: static !important;
+    margin-left: auto !important;
+    margin-right: 15px;
+    top: 8px;
+    font-size: 1rem;
+    box-shadow: 0 2px 6px var(--Negro);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    user-select: none;
+    outline-offset: 2px;
+  }
+  
+  /* Posiciones */
+  .reload-button {
+    left: 50px;
+  }
+  
+  .reload-button-SAP {
+    right: 50px;
+  }
+  
+  /* Hover y focus para accesibilidad */
+  .reload-button:hover,
+  .reload-button-SAP:hover,
+  .reload-button:focus,
+  .reload-button-SAP:focus {
+    background-color: var(--Azul);
+    outline: none;
+    transform: scale(1.05);
+  }
+  
+  /* Presionar */
+  .reload-button:active,
+  .reload-button-SAP:active {
+    transform: scale(0.97);
+  }
+  
+  /* Área principal */
+  .main {
+    flex: 1;
     display: flex;
     flex-direction: column;
-}
-
-.sub-main{
+    width: 100vw;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 30px;
+    padding: 20px 10px;
+    box-sizing: border-box;
+  }
+  
+  /* Sub contenedores flex */
+  .sub-main {
     display: flex;
     flex-direction: row;
-}
-
-.sub-container{
     width: 100%;
-    margin: 10px;
-    border-radius: 5px;
-    background-color: #303030;
-
-}
-.header-btn{
-    padding: 0px;
-    margin: 5px;
-    width: 120px;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: nowrap;
+  }
+  
+  /* Sub contenedor con sombra y borde */
+  .sub-container {
+    background-color: var(--Blanco);
+    border: 2px solid var(--Naranja);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(253, 152, 0, 0.2);
+    width: 100%;
+    box-sizing: border-box;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+  }
+  
+  /* Hover suave */
+  .sub-container:hover,
+  .sub-container:focus-within {
+    box-shadow: 0 6px 20px rgba(253, 152, 0, 0.4);
+    outline: none;
+    transform: translateY(-3px);
+  }
+  
+  /* Botón del header (general) */
+  .header-btn {
+    background-color: var(--Naranja);
+    border: none;
+    border-radius: 6px;
+    padding: 12px 24px;
+    color: var(--Blanco);
+    font-weight: 700;
+    font-size: 1.1rem;
     cursor: pointer;
-}
+    user-select: none;
+    transition: background-color 0.25s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 3px 8px rgba(253, 152, 0, 0.4);
+    outline-offset: 2px;
+  }
+  
+  /* Hover y focus para botón */
+  .header-btn:hover,
+  .header-btn:focus {
+    background-color: #e05500;
+    box-shadow: 0 4px 12px rgba(224, 85, 0, 0.6);
+    outline: none;
+    transform: scale(1.05);
+  }
+  
+  /* Presionar botón */
+  .header-btn:active {
+    background-color: var(--Naranja);
+    transform: scale(0.97);
+    box-shadow: none;
+  }
+  
+  /* Tabla OF */
+  .tabla-of {
+    width: 100%;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+  }
+  
+  /* Texto para cabecera y elementos de tabla */
+  .elemento-cabecera,
+  .elemento-elemento-OF {
+    color: var(--Negro);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .sub-main {
+      flex-direction: column;
+      gap: 20px;
+    }
+  
+    .sub-container {
+      width: 100%;
+      padding: 20px;
+    }
+  
+    .header {
+      font-size: 2rem;
+      padding: 20px 15px;
+    }
+  
+    .header-btn {
+      padding: 10px 20px;
+      font-size: 1rem;
+    }
+  }
+  
+  /* Mejor soporte para focus visible en todos lados */
+  :focus-visible {
+    outline: 2px solid var(--Naranja);
+    outline-offset: 3px;
+  }
+  
+  .open-modal-button {
+    margin-left: 10px;
+    padding: 6px 12px;
+    background-color: #ffc107;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    width: 110vw;       
+    max-width: 1000px;  
+    height: 150vh;      
+    max-height: 700px; 
+    overflow-y: auto;  
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  
+    display: flex;
+    flex-direction: column;
+    align-items: center;     /* Centra horizontalmente */
+    text-align: center;      /* Centra textos */
+  }
 
+  .modal-content h2,
+  .modal-content p {
+    margin-bottom: 1rem;     /* Espacio entre textos */
+  }
+  
+  .close-button {
+    margin-top: 2rem;
+    padding: 6px 12px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+  
+    
+  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  .of-search-box {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    margin-left: 20px;
+  }

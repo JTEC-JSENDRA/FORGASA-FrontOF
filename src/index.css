@@ -11,4 +11,19 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --Negro: rgb(42,38,34);
+  --NegroOscuro: rgb(0,0,0);
+  --Blanco: rgb(255,255,255);
+  --Rojo: rgb(255,0,0);
+  --Verde: rgb(0,255,0);
+  --Azul: rgb(0,0,255);
+  
+  --GrisClaro: rgb(205,205,205);
+  --GrisOscuro: rgb(128,128,128);
+  --Naranja: rgb(255,158,0);
+  --Amarillo: rgb(255, 255, 0);  
+  --AzulClaro: #cce4f7;
+  --NaranjaClaro: rgb(250, 207, 137);;
+
 }

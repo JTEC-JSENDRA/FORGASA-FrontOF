@@ -9,10 +9,10 @@ export default function container_OF({OF_Liberadas, OF_Lanzadas, LanzarOF}){
 
   const width_Orden = "6%";
   const width_Material = "9%";
-  const width_TextoMaterial = "20%";
+  const width_TextoMaterial = "10%";
   const width_Cantidad = "5%";                                    
   const width_Unidades = "1.5%";
-  const width_InicioFin = "9%";
+  const width_InicioFin = "14%";
   const width_Alternativa = "2%";
   const width_Operacion = "6%";
   const width_Receta = "10%";
@@ -21,12 +21,12 @@ export default function container_OF({OF_Liberadas, OF_Lanzadas, LanzarOF}){
   const width_Accion = "3.5%";
   const hasDatos = OF_Liberadas?.length > 0
   
-  console.log("OF_Liberadas recibidas:", OF_Liberadas);
+  //console.log("OF_Liberadas recibidas:", OF_Liberadas);
 
   return(
       <>
         <div>
-          <p className='elemento-cabecera'  style={{textAlign: "center"}}>Released Production Order SAP</p>
+          <p className='elemento-cabecera'  style={{textAlign: "center"}}>ORDENES DE PRODUCCIÓN LIBERADAS</p>
           <hr className='separador' />
         </div>
 
@@ -78,7 +78,7 @@ export default function container_OF({OF_Liberadas, OF_Lanzadas, LanzarOF}){
           //console.log(`OrdenFabricacion[${index}] completa:\n`, JSON.stringify(OrdenFabricacion, null, 2));
           
           if (!OrdenFabricacion?.GMDix?.nombreReceta || OrdenFabricacion.GMDix.nombreReceta === "Vacio") {
-            console.warn(`⚠️ OF[${index}] SIN receta válida:`, OrdenFabricacion.AUFNR);
+            //console.warn(`⚠️ OF[${index}] SIN receta válida:`, OrdenFabricacion.AUFNR);
           }
           // Llamar a la API cuando cambia la receta seleccionada
           useEffect(() => {
@@ -86,8 +86,8 @@ export default function container_OF({OF_Liberadas, OF_Lanzadas, LanzarOF}){
             if (selectedReceta) {
 
               const url = `http://localhost:7248/api/Liberadas/obtenerVersionesReceta?receta=${selectedReceta}`;
-              console.log("Receta seleccionada:", selectedReceta);
-              console.log("URL:", url);
+              //console.log("Receta seleccionada:", selectedReceta);
+              //console.log("URL:", url);
 
               fetch(`http://localhost:7248/api/Liberadas/obtenerVersionesReceta?receta=${selectedReceta}`)
                
@@ -104,7 +104,7 @@ export default function container_OF({OF_Liberadas, OF_Lanzadas, LanzarOF}){
                 return JSON.parse(text); // Convertimos manualmente a JSON
               })
               .then(data => {
-                console.log("Datos recibidos:", data);
+                //console.log("Datos recibidos:", data);
                 setVersiones(data.versiones || []);
               })
               .catch(error => console.error("Error obteniendo versiones:", error));
@@ -115,11 +115,13 @@ export default function container_OF({OF_Liberadas, OF_Lanzadas, LanzarOF}){
           setSelectedReceta(event.target.value);
           setSelectedVersion("0"); // Reiniciar versión cuando se cambia la receta
           setSelectedDestino("--");
+          /*
           console.log("Receta cambiada, reiniciando valores: ", {
             selectedVersion: "0",
             selectedDestino: "--",
           });
           console.log("Receta cambiada:", event.target.value);
+          */
         };
       
         const handleVersionChange = (event) => {
@@ -143,6 +145,8 @@ export default function container_OF({OF_Liberadas, OF_Lanzadas, LanzarOF}){
           );
           //console.log(" - - - - - - - - ");
           //console.log(tieneARBPL);
+
+          //console.log("Recetas:",{ nombreReceta: OrdenFabricacion.GMDix.nombreReceta });
 
           // DEBUG receta ->>>>> SALE VACÍO <<<<-
           //console.log(`Receta cruda [${index}]:`, OrdenFabricacion.GMDix.nombreReceta);
