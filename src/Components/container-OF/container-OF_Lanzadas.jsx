@@ -1,105 +1,79 @@
-import './container-OF.css'
+import './container-OF.css';
 
+export default function ContainerOFLanzadas({ OF_Lanzadas }) {
+  // Anchos de columnas
+  const widths = {
+    titulo: "100%",
+    orden: "6%",
+    descripcion: "10%",
+    inicioFin: "12%",
+    receta: "10%",
+    version: "3.5%",
+    destino: "3.5%",
+    etapaNombre: "10%",
+    etapaNumero: "6%",
+    estado: "8%"
+  };
 
-export default function container_OF_Runing({OF_Lanzadas}){
-    
-    const width_Titulo = "100%";
-    const width_Orden = "6%";
-    const width_TextoMaterial = "10%";
-    const width_InicioFin = "12%";
-    const width_Receta = "10%";
-    const width_Version = "3.5%";
-    const width_Destino = "3.5%";
-    const width_Etapa = "10%";
-    const width_Numero_Etapa = "6%";
-    const width_Estado = "8%";
-    const hasDatos = OF_Lanzadas?.length > 0
+  const hasDatos = OF_Lanzadas?.length > 0;
 
-    function formatearFechaYHora(fecha) {
-        if (!fecha) return '';
-      
-        const dateObj = new Date(fecha);
-        if (isNaN(dateObj)) return fecha;
-      
-        const year = dateObj.getFullYear();
-        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-        const day = String(dateObj.getDate()).padStart(2, '0');
-      
-        const hours = String(dateObj.getHours()).padStart(2, '0');
-        const minutes = String(dateObj.getMinutes()).padStart(2, '0');
-        const seconds = String(dateObj.getSeconds()).padStart(2, '0');
-      
-        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-    }
-
-    // console.log(OF_Lanzadas)
+  // Formatear fecha a "YYYY-MM-DD HH:mm:ss"
+  function formatearFechaYHora(fecha) {
+    if (!fecha) return '';
+    const d = new Date(fecha);
+    if (isNaN(d)) return fecha;
 
     return (
-        <>
-        <div>
+      `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')} ` +
+      `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}:${String(d.getSeconds()).padStart(2, '0')}`
+    );
+  }
 
-            <p className='elemento-cabecera'  style={{textAlign: "center"}}>ORDENES DE PRODUCCIÓN LANZADAS</p>
-            <hr className='separador' />
+  return (
+    <>
+      <div>
+        <p className='elemento-cabecera' style={{ textAlign: "center", width: widths.titulo }}>
+          ORDENES DE PRODUCCIÓN LANZADAS
+        </p>
+        <hr className='separador' />
+      </div>
 
-        </div>
-        <div>
-            <li className='cabecera-tabla'>
-                <p className='elemento-cabecera' style={{width: width_InicioFin}}>Fecha Inicio</p>
-                <hr className='separador' />
-                <p className='elemento-cabecera' style={{width: width_Orden}}>OF</p>
-                <hr className='separador' />
-                <p className='elemento-cabecera' style={{width: width_TextoMaterial}}>Descripción</p>
-                <hr className='separador' />
-                <p className='elemento-cabecera' style={{width: width_Receta}}>Receta</p>
-                <hr className='separador' />
-                <p className='elemento-cabecera' style={{width: width_Version}}>Version</p>
-                <hr className='separador' />
-                <p className='elemento-cabecera' style={{width: width_Destino}}>Destino</p>
-                <hr className='separador' />
-                <p className='elemento-cabecera' style={{width: width_Etapa}}>Nombre Etapa</p>
-                <hr className='separador' />
-                <p className='elemento-cabecera' style={{width: width_Numero_Etapa}}>Etapa</p>
-                <hr className='separador' />
-                <p className='elemento-cabecera' style={{width: width_Estado}}>Estado</p>
-                <hr className='separador' />
+      {/* Cabecera de tabla */}
+      <ul className='cabecera-tabla'>
+        <p className='elemento-cabecera' style={{ width: widths.inicioFin }}>Fecha Inicio</p><hr className='separador' />
+        <p className='elemento-cabecera' style={{ width: widths.orden }}>OF</p><hr className='separador' />
+        <p className='elemento-cabecera' style={{ width: widths.descripcion }}>Descripción</p><hr className='separador' />
+        <p className='elemento-cabecera' style={{ width: widths.receta }}>Receta</p><hr className='separador' />
+        <p className='elemento-cabecera' style={{ width: widths.version }}>Versión</p><hr className='separador' />
+        <p className='elemento-cabecera' style={{ width: widths.destino }}>Destino</p><hr className='separador' />
+        <p className='elemento-cabecera' style={{ width: widths.etapaNombre }}>Nombre Etapa</p><hr className='separador' />
+        <p className='elemento-cabecera' style={{ width: widths.etapaNumero }}>Etapa</p><hr className='separador' />
+        <p className='elemento-cabecera' style={{ width: widths.estado }}>Estado</p><hr className='separador' />
+      </ul>
+      <hr className='separador' />
+
+      {/* Cuerpo de la tabla */}
+      <ul className='tabla-of'>
+        {hasDatos ? (
+          OF_Lanzadas.map((orden, idx) => (
+            <li key={idx} className='elemento-OF'>
+              <p className='elemento-elemento-OF' style={{ width: widths.inicioFin }}>
+                {formatearFechaYHora(orden.fechaInicio)}
+              </p><hr className='separador' />
+              <p className='elemento-elemento-OF' style={{ width: widths.orden }}>{orden.OF}</p><hr className='separador' />
+              <p className='elemento-elemento-OF' style={{ width: widths.descripcion }}>{orden.descripcion}</p><hr className='separador' />
+              <p className='elemento-elemento-OF' style={{ width: widths.receta }}>{orden.nombreReceta}</p><hr className='separador' />
+              <p className='elemento-elemento-OF' style={{ width: widths.version }}>{orden.version}</p><hr className='separador' />
+              <p className='elemento-elemento-OF' style={{ width: widths.destino }}>{orden.nombreReactor}</p><hr className='separador' />
+              <p className='elemento-elemento-OF' style={{ width: widths.etapaNombre }}>{orden.nombreEtapa}</p><hr className='separador' />
+              <p className='elemento-elemento-OF' style={{ width: widths.etapaNumero }}>{orden.numeroEtapa}</p><hr className='separador' />
+              <p className='elemento-elemento-OF' style={{ width: widths.estado }}>{orden.estado}</p><hr className='separador' />
             </li>
-            <hr className='separador' />
-        </div>
-
-        {/* Tabla con los datos */}
-        <div className='tabla-of'>
-        {
-        hasDatos
-        ? OF_Lanzadas.map((OrdenFabricacion, index) => {
-        //console.log("Nombre de la etapa:", OrdenFabricacion.nombreEtapa); // <-- Aquí está el log
-
-            return (
-                <li key={index} className='elemento-OF'>
-                    <p className='elemento-elemento-OF' style={{ width: width_InicioFin }}>{formatearFechaYHora(OrdenFabricacion.fechaInicio)}</p>
-                    <hr className='separador' />
-                    <p className='elemento-elemento-OF' style={{ width: width_Orden }}>{OrdenFabricacion.OF}</p>
-                    <hr className='separador' />
-                    <p className='elemento-elemento-OF' style={{ width: width_TextoMaterial }}>{OrdenFabricacion.descripcion}</p>
-                    <hr className='separador' />
-                    <p className='elemento-elemento-OF' style={{ width: width_Receta }}>{OrdenFabricacion.nombreReceta}</p>
-                    <hr className='separador' />
-                    <p className='elemento-elemento-OF' style={{ width: width_Version }}>{OrdenFabricacion.version}</p>
-                    <hr className='separador' />
-                    <p className='elemento-elemento-OF' style={{ width: width_Destino }}>{OrdenFabricacion.nombreReactor}</p>
-                    <hr className='separador' />
-                    <p className='elemento-elemento-OF' style={{ width: width_Etapa }}>{OrdenFabricacion.nombreEtapa}</p>
-                    <hr className='separador' />
-                    <p className='elemento-elemento-OF' style={{ width: width_Numero_Etapa }}>{OrdenFabricacion.numeroEtapa}</p>
-                    <hr className='separador' />
-                    <p className='elemento-elemento-OF' style={{ width: width_Estado }}>{OrdenFabricacion.estado}</p>
-                    <hr className='separador' />
-                </li>
-            );
-        })
-        : <p style={{textAlign: "center"}}>No Production Orders launched</p>
-        }
-        </div>
-
-        </>
-    )
+          ))
+        ) : (
+          <p style={{ textAlign: "center" }}>No hay órdenes de producción lanzadas</p>
+        )}
+      </ul>
+    </>
+  );
 }

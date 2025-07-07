@@ -145,3 +145,17 @@
     box-shadow: 0 0 14px var(--Naranja);
   }
 }
+
+.columna-material {
+  width: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.subcolumna {
+  width: 50%;
+  text-align: center;
+}
+p {
+  margin: 0;
+}

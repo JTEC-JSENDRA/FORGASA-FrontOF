@@ -2,7 +2,7 @@ import React from "react";
 import './container-OF.css';
 
 export default function ContainerOFMat({ OF_Mat }) {
-  const colGroupWidth = "10%";
+  const colGroupWidth = "11.11%";
   const subColWidth = "50%";
   const hasDatos = Array.isArray(OF_Mat) && OF_Mat.length > 0;
 
@@ -10,14 +10,14 @@ export default function ContainerOFMat({ OF_Mat }) {
   const ALERT_THRESHOLD = 0.1; // 10% sobre teórico -- VALOR EN EL QUE SALTA EL AVISO DE
 
   const materiales = [
-    { key: "lc70", label: "LC70" },
-    { key: "lc80", label: "LC80" },
-    { key: "hl26", label: "HL26" },
-    { key: "agua", label: "AGUA" },
-    { key: "aguaRecuperada", label: "AGUA RECUPERADA" },
-    { key: "antiespumante", label: "ANTIESPUMANTE" },
-    { key: "ligno", label: "LIGNO" },
-    { key: "potasa", label: "POTASA" },
+    { key: "lc70", label: "LC70 (kg)" },
+    { key: "lc80", label: "LC80 (kg)" },
+    { key: "hl26", label: "HL26 (kg)" },
+    { key: "agua", label: "AGUA (L)" },
+    { key: "aguaRecuperada", label: "AGUA RECUPERADA (L)" },
+    { key: "antiespumante", label: "ANTIESPUMANTE (L)" },
+    { key: "ligno", label: "LIGNO (L)" },
+    { key: "potasa", label: "POTASA (L)" },
   ];
 
   return (
@@ -35,7 +35,7 @@ export default function ContainerOFMat({ OF_Mat }) {
         style={{ display: "flex", alignItems: "center", textAlign: "center" }}
       >
         <div style={{ width: colGroupWidth }}>
-          <p className='elemento-cabecera'>OF</p>
+          <p className='elemento-cabecera'>OrdenFabricación</p>
         </div>
         {materiales.map((mat, i) => (
           <div key={i} style={{ width: colGroupWidth}}>
