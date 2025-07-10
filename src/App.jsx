@@ -129,11 +129,11 @@ function App() {
     return combinado;
   }, [OF_Mat, OF_MatReales]);
 
-  // Auto-refresh cada 30 segundos
+  // Auto-refresh cada 20 segundos
   useEffect(() => {
     const interval = setTimeout(() => {
       setRefrescar(!Refrescar);
-    }, 30000);
+    }, 20000);
     return () => clearTimeout(interval);
   }, [Refrescar]);
 

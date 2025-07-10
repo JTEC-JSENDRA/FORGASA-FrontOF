@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import './container-OF.css';
 
 export default function ContainerOFMat({ OF_Mat }) {
@@ -6,8 +6,10 @@ export default function ContainerOFMat({ OF_Mat }) {
   const subColWidth = "50%";
   const hasDatos = Array.isArray(OF_Mat) && OF_Mat.length > 0;
 
-  
-  const ALERT_THRESHOLD = 0.1; // 10% sobre teórico -- VALOR EN EL QUE SALTA EL AVISO DE
+    // Estado para el umbral de alerta (en porcentaje, ej: 10)
+    const [alertPercent, setAlertPercent] = useState(10); // valor inicial 10%
+
+  const ALERT_THRESHOLD = alertPercent / 100;; // VALOR EN EL QUE SALTA EL AVISO DE
 
   const materiales = [
     { key: "lc70", label: "LC70 (kg)" },
@@ -27,6 +29,25 @@ export default function ContainerOFMat({ OF_Mat }) {
           MATERIALES ASOCIADOS A LA OF
         </p>
         <hr className='separador' />
+
+        {/* Casilla para ingresar el porcentaje de alerta */}
+        <div style={{ textAlign: "center", marginBottom: "1rem" }}>
+          <label htmlFor="alert-threshold" style={{ marginRight: "0.5rem", fontWeight: "bold" }}>
+            Umbral de alerta (% sobre teórico):
+          </label>
+
+          <input
+            id="alert-threshold"
+            type="number"
+            min={0}
+            max={100}
+            step={1}
+            value={alertPercent}
+            onChange={(e) => setAlertPercent(Number(e.target.value))}
+            style={{ width: "60px", textAlign: "center" }}
+          />
+        </div>
+
       </div>
 
       {/* CABECERA */}

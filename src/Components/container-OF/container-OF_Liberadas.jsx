@@ -77,7 +77,7 @@ export default function ContainerOF({ OF_Liberadas, OF_Lanzadas, LanzarOF }) {
                 // Handlers
                 const cambiarReceta = (e) => {
                   setRecetaSeleccionada(e.target.value);
-                  setVersionSeleccionada("0");
+                  setVersionSeleccionada("0"); 
                   setDestinoSeleccionado("--");
                 };
                 const cambiarVersion = (e) => setVersionSeleccionada(e.target.value);
