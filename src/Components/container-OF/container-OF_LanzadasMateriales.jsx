@@ -54,7 +54,12 @@ export default function ContainerOFMat({ OF_Mat }) {
             max={100}
             step={1}
             value={alertPercent}
-            onChange={(e) => setAlertPercent(Number(e.target.value))}
+            onChange={(e) => {
+              const value = Number(e.target.value);
+              if (value >= 0 && value <= 100) {
+                setAlertPercent(value);
+              }
+            }}
             style={{ width: "60px", textAlign: "center" }}
           />
         </div>
