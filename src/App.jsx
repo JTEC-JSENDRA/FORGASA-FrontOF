@@ -1,70 +1,75 @@
 import './App.css';
 import { useState, useEffect, useMemo } from 'react';
-
 import OFLiberadas from './Components/container-OF/container-OF_Liberadas.jsx';
 import OFLanzadas from './Components/container-OF/container-OF_Lanzadas.jsx';
 import OFMat from './Components/container-OF/container-OF_LanzadasMateriales.jsx';
-
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
 
+
 function App() {
-  // Estado para OF lanzadas y liberadas
+
+  // -- ESTADOS PRINCIPALES --
+  
+  // Guardan las OF lanzadas y liberadas
   const [OF_Lanzadas, setOF_Lanzadas] = useState({});
   const [OF_Liberadas, setOF_Liberadas] = useState({});
 
-  // Estado de control para recargas y acciones
+
+  // Controlan acciones: recarga, lanzamiento o actualización
   const [Lanzar, setLanzar] = useState(false);
   const [Refrescar, setRefrescar] = useState(false);
-  const [Reload_SAP, setReload_SAP] = useState(false);
 
-  // Estado del modal y búsqueda por OF
-  const [showModal, setShowModal] = useState(false);
-  const [inputOF, setInputOF] = useState("");
 
-  // Estado para mostrar datos de una OF específica
-  const [loadingOF, setLoadingOF] = useState(false);
-  const [errorOF, setErrorOF] = useState(null);
-  const [datosOF, setDatosOF] = useState(null);
+  // Control de la búsqueda manual de una OF específica
+  const [showModal, setShowModal] = useState(false);    // Muestra u oculta el modal
+  const [inputOF, setInputOF] = useState("");           // Guarda el valor ingresado por el usuario
 
-  // Estados de materiales teóricos y reales
+
+  // Control de estado para cargar los datos de una OF específica
+  const [loadingOF, setLoadingOF] = useState(false);    // Indica si está cargando
+  const [errorOF, setErrorOF] = useState(null);         // Almacena un posible error
+  const [datosOF, setDatosOF] = useState(null);         // Guarda los datos obtenidos de la API
+
+
+  // Materiales teóricos y reales por OF
   const [OF_Mat, setOF_Mat] = useState({});
   const [OF_MatReales, setOF_MatReales] = useState({});
 
+
+  // Lista de OF ya finalizadas (para mostrar en el buscador)
   const [OF_Finalizadas, setOF_Finalizadas] = useState([]);
 
-  // Buscar una OF específica e iniciar modal
+
+  // 🔍 Función que abre la ventana modal al buscar una OF
   const handleAbrirVentana = async () => {
-    //console.log("OF ingresada:", inputOF);
-    await buscarDatosOF();  // Llama a la API
+    await buscarDatosOF();  // Busca los datos en la API
     setShowModal(true);     // Muestra el modal
   };
 
-  // Fetch de datos individuales de OF (detalle)
+
+  // 🔍 Función que busca una OF específica mediante una llamada a la API
   const buscarDatosOF = async () => {
     if (!inputOF) return;
-
     setLoadingOF(true);
     setErrorOF(null);
-
     try {
       const response = await fetch(`http://localhost:7248/api/Lanzadas/OF/${inputOF}`);
       if (!response.ok) throw new Error("Error en la búsqueda de la OF");
 
       const data = await response.json();
-      //console.log("Datos recibidos de la API:", data);
-      setDatosOF(data);
+      setDatosOF(data);                                 // Almacenamos los datos recibidos
     } catch (error) {
-      //console.error("Error al buscar la OF:", error);
       setErrorOF(error.message);
       setDatosOF(null);
     } finally {
-      setLoadingOF(false);
+      setLoadingOF(false);                              // Siempre se ejecuta al final (éxito o error)
     }
   };
 
-  // Fetch OF liberadas
+
+  // 🔁 Carga las OF liberadas desde el backend
   const fetchLiberadas = () => {
     fetch("http://localhost:7248/api/Liberadas/FO01")
       .then(res => {
@@ -80,7 +85,8 @@ function App() {
       .catch(err => console.error("❌ Error en fetch de OF Liberadas:", err));
   };
 
-  // Llamada para refrescar desde SAP
+
+   // 🔁 Llamada que obliga a SAP a refrescar su información (no devuelve datos, solo desencadena)
   const fetchLiberadas_SAP = () => {
     fetch("http://localhost:7248/api/Liberadas/SAP/FO01")
       .then(res => {
@@ -89,20 +95,22 @@ function App() {
       .catch(err => console.error("❌ Error en fetch de SAP:", err));
   };
 
-  // Recarga manual de OF liberadas
+
+  // 🔁 Botón para recargar manualmente la info de OF liberadas
   const reloadInfo = () => {
     console.log('🔁 Recargando información...');
     fetchLiberadas();
   };
 
-  // Recarga desde SAP
+
+  // 🔄 Botón para forzar recarga desde SAP
   const reloadSAP = () => {
     console.log('🔄 Recargando desde SAP...');
     fetchLiberadas_SAP();
   };
 
 
-  // Combinación de materiales teóricos y reales (por orden de fabricación)
+  // 📊 Combinamos datos teóricos y reales para construir un gráfico comparativo
   const combinedMat = useMemo(() => {
     if (!OF_Mat.length || !OF_MatReales.length) return [];
 
@@ -124,12 +132,11 @@ function App() {
       });
       return nuevoObj;
     });
-
-    //console.log("combinedMat:", combinado);
     return combinado;
   }, [OF_Mat, OF_MatReales]);
 
-  // Auto-refresh cada 20 segundos
+
+  // 🔁 Refresca automáticamente cada 20 segundos
   useEffect(() => {
     const interval = setTimeout(() => {
       setRefrescar(!Refrescar);
@@ -137,7 +144,8 @@ function App() {
     return () => clearTimeout(interval);
   }, [Refrescar]);
 
-  // Lanzar OF (POST a backend)
+
+  // 🚀 Enviar (lanzar) una OF al backend mediante POST
   const LanzarOF = async (Datos) => {
     try {
       const response = await fetch("http://localhost:7248/api/Liberadas", {
@@ -153,7 +161,8 @@ function App() {
     }
   };
 
-  // Función para formatear la fecha
+
+  // 🗓️ Convierte una fecha ISO a formato más legible
   const formatearFecha = (fechaISO) => {
     if (!fechaISO) return 'N/A';
     const fecha = new Date(fechaISO);
@@ -166,9 +175,12 @@ function App() {
     });
   };
 
-  // Cargar datos iniciales
+
+  // 📦 useEffect para cargar los datos al iniciar
   useEffect(() => { fetchLiberadas(); }, []);
 
+
+  // 🔁 Re-cargar OF Lanzadas, Materiales Teóricos/Reales y Finalizadas cada vez que se lanza o refresca
   useEffect(() => {
     fetch("http://localhost:7248/api/Lanzadas")
       .then(res => res.json())
@@ -203,12 +215,13 @@ function App() {
       .catch(err => console.error("Error al obtener OF Finalizadas", err));
   }, [Lanzar, Refrescar]);
 
+
+  // 🧱 Renderizado de la aplicación
   return (
     <div className='container'>
-      {/* Header con input de búsqueda de OF */}
+      {/* Encabezado con buscador y botones */}
       <header className='header'>
-
-        {/* Texto centrado */}
+        {/* Título centrado */}
         <div style={{
           position: 'absolute',
           left: '50%',
@@ -222,9 +235,9 @@ function App() {
         }}>
           Gestión de Órdenes de Fabricación
         </div>
-
+        
+        {/* Barra de búsqueda de OF */}
         <div className="of-search-box">   
-
           <input
             list="listaOFs"
             value={inputOF}
@@ -238,13 +251,11 @@ function App() {
               width: "200px"
             }}
           />
-
           <datalist id="listaOFs">
             {OF_Finalizadas.map((of, index) => (
               <option key={index} value={of.OrdenFabricacion || of} />
             ))}
           </datalist>
-
           <button
             style={{
               backgroundColor: "gold",
@@ -257,17 +268,13 @@ function App() {
           >
             🔍 Buscar OF
           </button>
-            
           <button onClick={reloadSAP} className='reload-button-SAP'>
             🔄 Recargar SAP
           </button>
-
         </div>
-
-
       </header>
 
-      {/* Contenido principal */}
+      {/* Contenido principal: lista de OF Liberadas, Lanzadas y materiales */}
       <main className='main'>
         <section className='sub-main'>
           <section className='sub-container'>
@@ -288,7 +295,7 @@ function App() {
         </section>
       </main>
 
-      {/* Modal para visualización de datos de una OF específica */}
+      {/* Modal con datos detallados de una OF específica */}
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -319,8 +326,7 @@ function App() {
                     </span>
                   </p>
                 </>
-
-                {/* Gráfico de barras comparativo CT vs CR */}
+                {/* Gráfico comparando cantidad teórica y real */}
                 <ResponsiveContainer width="100%" height={500}>
                   <BarChart
                     data={Object.values(

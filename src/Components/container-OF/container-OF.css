@@ -1,11 +1,49 @@
-.tabla-of,
+:root {
+  --Negro: #222;
+  --Blanco: #fff;
+  --Naranja: #f58220;
+  --NaranjaClaro: #fbbd7a;
+  --NaranjaOscuro: #d46800;
+  --GrisClaro: #ddd;
+}
+
 .tabla-liberadas,
-.tabla-lanzadas {
+.tabla-lanzadas,
+.tabla-of {
   width: 100%;
   overflow-x: auto;
   border-collapse: collapse;
   border-spacing: 0;
-  box-sizing: border-box; /* que el padding no afecte el ancho total */
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.9rem;
+  color: var(--Negro);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.fila-tabla {
+  display: grid;
+  grid-template-columns: 12% 6% 10% 10% 3.5% 3.5% 10% 6% 8%;
+  align-items: center;
+  text-align: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--GrisClaro);
+  font-size: 0.9rem;
+}
+
+.fila-tabla > div {
+  padding: 4px 8px;
+  box-sizing: border-box;
+  font-size: 0.9rem;
+}
+
+.cabecera {
+  background-color: var(--Naranja);
+  font-weight: bold;
+  color: var(--Negro);
+  border-radius: 5px 5px 0 0;
 }
 
 /* Contenedores flex para filas y cabecera */
@@ -15,83 +53,22 @@
   align-items: center;
   text-align: center;
   box-sizing: border-box;
-}
-
-/* Contenedores de cada columna dentro de cabecera y fila */
-.cabecera-tabla > div,
-.elemento-OF > div {
-  width: 10%; /* mismo ancho para todas las columnas */
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0 8px; /* padding horizontal para espacio interno */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Para las columnas de materiales, agregamos un div flex para sub-columnas */
-.cabecera-tabla > div > div,
-.elemento-OF > div > div {
-  display: flex;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-  gap: 0; /* sin espacios extras */
-}
-
-/* Cada sub-columna (Teórica / Real) ocupa 50% del contenedor padre */
-.cabecera-tabla > div > div > p,
-.elemento-OF > div > div > p {
-  flex: 1; /* igual ancho para ambas */
-  margin: 0;
-  padding: 4px 0;
-  font-size: 0.75rem;
-  box-sizing: border-box;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Texto general de cabecera y elementos */
-.elemento-cabecera,
-.elemento-elemento-OF {
-  padding: 4px 0;
-  color: inherit;
+  grid-template-columns: 12% 6% 10% 10% 3.5% 3.5% 10% 6% 8%;
+  gap: 8px;
+  padding: 8px 8px; /* Aumentado padding vertical para mejor espaciado */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 0.9rem;
-  margin: 0;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-
-/* Estilo filas */
-.elemento-OF {
-  background-color: var(--Blanco); /* Fondo blanco */
-  color: var(--Negro); /* Texto negro */
-  padding: 8px 12px;
-  border-bottom: none; /* quitar líneas delimitadoras */
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.elemento-OF:hover {
-  background-color: var(--NaranjaClaro); /* naranja suave al hover */
   color: var(--Negro);
-  cursor: pointer;
+  border-bottom: 1px solid var(--GrisClaro);
 }
 
-/* Cabecera */
 .cabecera-tabla {
-  background-color: var(--Naranja); /* naranja oscuro */
+  background-color: var(--Naranja);
   color: var(--Negro);
-  padding: 10px 0;
-  font-weight: bold;
+  font-weight: 700;
+  font-size: 1rem;
   border-radius: 5px 5px 0 0;
-  gap: 0;
+  border-bottom: 2px solid var(--NaranjaOscuro);
 }
 
 /* Separadores */
@@ -102,10 +79,126 @@
   margin: 0;
 }
 
+/* Contenedores de cada columna dentro de cabecera y fila */
+.cabecera-tabla > div,
+.elemento-OF > div {
+  width: 10%; /* mismo ancho para todas las columnas */
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid var(--GrisClaro); /* Línea vertical entre columnas */
+}
+
+/* Eliminar el borde derecho del último div para evitar línea extra */
+.cabecera-tabla > div:last-child,
+.elemento-OF > div:last-child {
+  border-right: none;
+}
+
+/* Para las columnas de materiales, agregamos un div flex para sub-columnas */
+.cabecera-tabla > div > div,
+.elemento-OF > div > div {
+  display: flex;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  gap: 0;
+}
+
+/* Cada sub-columna (Teórica / Real) ocupa 50% del contenedor padre */
+.cabecera-tabla > div > div > p,
+.elemento-OF > div > div > p {
+  flex: 1;
+  margin: 0;
+  padding: 4px 0;
+  font-size: 0.9rem;       /* mismo tamaño que las otras celdas */
+  font-weight: 500;        /* mismo grosor que .elemento-elemento-OF */
+  box-sizing: border-box;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Texto general de cabecera y elementos */
+.elemento-cabecera{
+  padding: 0;
+  color: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin: 0;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.elemento-elemento-OF {
+  padding: 0;
+  color: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.elemento-OFLib {
+  padding: 0;
+  color: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.Titulo-tabla {
+  padding: 0;
+  color: inherit;
+  font-size: 1.2rem;
+  font-weight: 700; /* negrita */
+  margin: 0 0 1rem 0;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+
+/* Estilo filas */
+.elemento-OF {
+  background-color: var(--Blanco);
+  color: var(--Negro);
+  border-bottom: 1px solid var(--GrisClaro);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  padding: 8px 0;
+}
+
+
+.elemento-OF:hover {
+  background-color: var(--NaranjaClaro);
+  color: var(--Negro);
+  cursor: pointer;
+}
+
 /* Estilo para el valor real con alerta */
 .alert-real {
-  background-color: var(--Blanco); /* naranja muy claro */
-  color: var(--Naranja); /* naranja oscuro */
+  background-color: var(--Blanco);
+  color: var(--Naranja);
   font-weight: 700;
   border-radius: 6px;
   padding: 4px 8px;
@@ -115,23 +208,24 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
+  box-shadow: none;
 }
 
 /* Icono de alerta personalizado */
 .alert-icon {
   display: inline-block;
-  background-color: var(--Naranja); /* naranja vivo */
+  background-color: var(--Naranja);
   color: var(--Blanco);
   font-weight: bold;
-  font-size: 1.2rem;
-  width: 18px;
-  height: 18px;
-  line-height: 18px;
+  font-size: 1rem;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
   border-radius: 30%;
   text-align: center;
   user-select: none;
   animation: pulse 1.5s infinite;
-  box-shadow: 0 0 6px var(--Naranja);
+  box-shadow: 0 0 4px var(--Naranja);
   cursor: help;
   font-family: Arial, sans-serif;
 }
@@ -152,10 +246,12 @@
   flex-direction: column;
   align-items: center;
 }
+
 .subcolumna {
   width: 50%;
   text-align: center;
 }
+
 p {
   margin: 0;
 }

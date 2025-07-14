@@ -122,7 +122,7 @@
   .sub-container:focus-within {
     box-shadow: 0 6px 20px rgba(253, 152, 0, 0.4);
     outline: none;
-    transform: translateY(-3px);
+    /*transform: translateY(-3px);*/
   }
   
   /* Botón del header (general) */

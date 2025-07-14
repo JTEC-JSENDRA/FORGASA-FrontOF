@@ -26,7 +26,7 @@ export default function ContainerOF({ OF_Liberadas, OF_Lanzadas, LanzarOF }) {
     <>
       {/* Título */}
       <div>
-        <p className='elemento-cabecera' style={{ textAlign: "center" }}>
+        <p className='Titulo-tabla' style={{ textAlign: "center" }}>
           ORDENES DE PRODUCCIÓN LIBERADAS
         </p>
         <hr className='separador' />
@@ -77,7 +77,7 @@ export default function ContainerOF({ OF_Liberadas, OF_Lanzadas, LanzarOF }) {
                 // Handlers
                 const cambiarReceta = (e) => {
                   setRecetaSeleccionada(e.target.value);
-                  setVersionSeleccionada("0"); 
+                  setVersionSeleccionada("0");
                   setDestinoSeleccionado("--");
                 };
                 const cambiarVersion = (e) => setVersionSeleccionada(e.target.value);
@@ -99,43 +99,43 @@ export default function ContainerOF({ OF_Liberadas, OF_Lanzadas, LanzarOF }) {
 
                 return (
                   <li key={index} className="elemento-OF">
-                    <p className="elemento-elemento-OF" style={{ width: width.orden }}>
+                    <p className="elemento-OFLib " style={{ width: width.orden }}>
                       {parseInt(orden.AUFNR, 10)}
                     </p><hr className="separador" />
 
-                    <p className="elemento-elemento-OF" style={{ width: width.material }}>
+                    <p className="elemento-OFLib " style={{ width: width.material }}>
                       {parseInt(orden.PLNBEZ, 10)}
                     </p><hr className="separador" />
 
-                    <p className="elemento-elemento-OF" style={{ width: width.descripcion }}>
+                    <p className="elemento-OFLib " style={{ width: width.descripcion }}>
                       {orden.MAKTX}
                     </p><hr className="separador" />
 
-                    <p className="elemento-elemento-OF" style={{ width: width.cantidad }}>
+                    <p className="elemento-OFLib " style={{ width: width.cantidad }}>
                       {orden.GAMNG}
                     </p><hr className="separador" />
 
-                    <p className="elemento-elemento-OF" style={{ width: width.unidad }}>
+                    <p className="elemento-OFLib " style={{ width: width.unidad }}>
                       {orden.GMEIN}
                     </p><hr className="separador" />
 
-                    <p className="elemento-elemento-OF" style={{ width: width.fecha }}>
+                    <p className="elemento-OFLib " style={{ width: width.fecha }}>
                       {orden.GSTRS} / {orden.GSUZS}
                     </p><hr className="separador" />
 
-                    <p className="elemento-elemento-OF" style={{ width: width.fecha }}>
+                    <p className="elemento-OFLib " style={{ width: width.fecha }}>
                       {orden.GLTRS} / {orden.GLUZS}
                     </p><hr className="separador" />
 
-                    <p className="elemento-elemento-OF" style={{ width: width.alternativa }}>
+                    <p className="elemento-OFLib " style={{ width: width.alternativa }}>
                       {orden.STLAL}
                     </p><hr className="separador" />
 
-                    <p className="elemento-elemento-OF" style={{ width: width.operacion }}>
+                    <p className="elemento-OFLib " style={{ width: width.operacion }}>
                       {orden.GMDix.operacion}
                     </p><hr className="separador" />
 
-                    <p className="elemento-elemento-OF" style={{ width: width.receta }}>
+                    <p className="elemento-OFLib" style={{ width: width.receta }}>
                       <Desplegable
                         Datos={orden.GMDix.nombreReceta}
                         value={recetaSeleccionada}
@@ -143,7 +143,7 @@ export default function ContainerOF({ OF_Liberadas, OF_Lanzadas, LanzarOF }) {
                       />
                     </p><hr className="separador" />
 
-                    <p className="elemento-elemento-OF" style={{ width: width.version }}>
+                    <p className="elemento-OFLib" style={{ width: width.version }}>
                       <Desplegable
                         Datos={listaVersiones}
                         value={versionSeleccionada}
@@ -151,7 +151,7 @@ export default function ContainerOF({ OF_Liberadas, OF_Lanzadas, LanzarOF }) {
                       />
                     </p><hr className="separador" />
 
-                    <p className="elemento-elemento-OF" style={{ width: width.destino }}>
+                    <p className="elemento-OFLib" style={{ width: width.destino }}>
                       <Desplegable
                         Datos={orden.GMDix.nombreReactor}
                         value={destinoSeleccionado}
@@ -159,7 +159,7 @@ export default function ContainerOF({ OF_Liberadas, OF_Lanzadas, LanzarOF }) {
                       />
                     </p><hr className="separador" />
 
-                    <p className="elemento-elemento-OF" style={{ width: width.accion }}>
+                    <p className="elemento-OFLib" style={{ width: width.accion }}>
                       <Boton
                         Datos={orden}
                         LanzarOF={LanzarOF}

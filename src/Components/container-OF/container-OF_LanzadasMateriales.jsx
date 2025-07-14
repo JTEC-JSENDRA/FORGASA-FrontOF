@@ -1,16 +1,24 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import './container-OF.css';
 
+// Componente principal que recibe la lista de órdenes OF con materiales asociados
 export default function ContainerOFMat({ OF_Mat }) {
+  // Anchura de cada columna principal (material)
   const colGroupWidth = "11.11%";
+
+  // Anchura de las subcolumnas (teórica y real)
   const subColWidth = "50%";
+
+  // Verificamos si el array de datos es válido y tiene al menos un elemento
   const hasDatos = Array.isArray(OF_Mat) && OF_Mat.length > 0;
 
-    // Estado para el umbral de alerta (en porcentaje, ej: 10)
-    const [alertPercent, setAlertPercent] = useState(10); // valor inicial 10%
+  // Estado para definir el umbral de alerta (% de tolerancia sobre el valor teórico)
+  const [alertPercent, setAlertPercent] = useState(10); // Valor por defecto: 10%
 
-  const ALERT_THRESHOLD = alertPercent / 100;; // VALOR EN EL QUE SALTA EL AVISO DE
+  // Convertimos el umbral de alerta a decimal (por ejemplo, 10% -> 0.1)
+  const ALERT_THRESHOLD = alertPercent / 100;
 
+  // Lista de materiales que queremos mostrar en la tabla
   const materiales = [
     { key: "lc70", label: "LC70 (kg)" },
     { key: "lc80", label: "LC80 (kg)" },
@@ -24,18 +32,21 @@ export default function ContainerOFMat({ OF_Mat }) {
 
   return (
     <>
+      {/* TÍTULO DE LA SECCIÓN Y CAMPO PARA CAMBIAR EL UMBRAL DE ALERTA */}
       <div>
-        <p className='elemento-cabecera' style={{ textAlign: "center" }}>
+        {/* Título principal */}
+        <p className="Titulo-tabla" style={{ textAlign: "center" }}>
           MATERIALES ASOCIADOS A LA OF
         </p>
-        <hr className='separador' />
 
-        {/* Casilla para ingresar el porcentaje de alerta */}
+        {/* Línea divisora */}
+        <hr className="separador" />
+
+        {/* Campo de entrada para modificar el umbral de alerta */}
         <div style={{ textAlign: "center", marginBottom: "1rem" }}>
-          <label htmlFor="alert-threshold" style={{ marginRight: "0.5rem", fontWeight: "bold" }}>
+          <label htmlFor="alert-threshold" style={{ marginRight: "0.5rem" }}>
             Umbral de alerta (% sobre teórico):
           </label>
-
           <input
             id="alert-threshold"
             type="number"
@@ -47,89 +58,74 @@ export default function ContainerOFMat({ OF_Mat }) {
             style={{ width: "60px", textAlign: "center" }}
           />
         </div>
-
       </div>
 
-      {/* CABECERA */}
-      <div
-        className='cabecera-tabla'
-        style={{ display: "flex", alignItems: "center", textAlign: "center" }}
-      >
-        <div style={{ width: colGroupWidth }}>
-          <p className='elemento-cabecera'>OrdenFabricación</p>
+      {/* CABECERA DE LA TABLA */}
+      <div className="cabecera-tabla">
+        {/* Columna: Orden de Fabricación */}
+        <div style={{ width: '10%' }}>
+          <p className="elemento-cabecera">Orden Fabricación</p>
         </div>
+
+        {/* Por cada material, mostramos su nombre y subcabeceras */}
         {materiales.map((mat, i) => (
-          <div key={i} style={{ width: colGroupWidth}}>
-            <p className='elemento-cabecera'>{mat.label}</p>
-            <div style={{ display: 'flex' }}>
-              <p
-                className='elemento-cabecera'
-                style={{ width: subColWidth, fontSize: "0.75rem" }}
-              >
-                Teórica
-              </p>
-              <p
-                className='elemento-cabecera'
-                style={{ width: subColWidth, fontSize: "0.75rem" }}
-              >
-                Real
-              </p>
+          <div key={i} className="columna-material">
+            {/* Nombre del material */}
+            <p className="elemento-cabecera">{mat.label}</p>
+
+            {/* Subcabeceras: Teórica y Real */}
+            <div style={{ display: "flex", width: "100%" }}>
+              <p className="elemento-cabecera subcolumna">Teórica</p>
+              <p className="elemento-cabecera subcolumna">Real</p>
             </div>
           </div>
         ))}
       </div>
-      <hr className='separador' />
 
-      {/* DATOS */}
-      <ul className='tabla-of' style={{ padding: 0, margin: 0 }}>
+      {/* Separador visual entre cabecera y cuerpo */}
+      <hr className="separador" />
+
+      {/* CUERPO DE LA TABLA */}
+      <ul className="tabla-of">
+        {/* Si hay datos cargados, los mostramos */}
         {hasDatos ? (
           OF_Mat.map((mat) => (
-            <li
-              key={mat.ordenFabricacion}
-              className='elemento-OF'
-              style={{ display: "flex", alignItems: "center", textAlign: "center" }}
-            >
-              <div style={{ width: colGroupWidth }}>
-                <p className='elemento-elemento-OF'>{mat.ordenFabricacion}</p>
+            <li key={mat.ordenFabricacion} className="elemento-OF">
+              {/* Celda: Orden de Fabricación */}
+              <div style={{ width: '10%' }}>
+                <p className="elemento-elemento-OF">{mat.ordenFabricacion}</p>
               </div>
+
+              {/* Por cada material, mostramos su valor teórico y real */}
               {materiales.map((material, i) => {
                 const key = material.key;
                 const realKey = key + "Real";
 
-                //const teorico = Number(mat[key]) || 0;
-                //const real = Number(mat[realKey]) || 0;
-                const teorico = Number(String(mat[key]).replace(',', '.')) || 0;
-                const real = Number(String(mat[realKey]).replace(',', '.')) || 0;
-                
+                // Obtenemos valores, convirtiendo strings con coma a número
+                const teorico = Number(String(mat[key]).replace(",", ".")) || 0;
+                const real = Number(String(mat[realKey]).replace(",", ".")) || 0;
+
+                // Verificamos si el valor real supera el umbral de alerta
                 const isAlert = real > teorico * (1 + ALERT_THRESHOLD);
 
                 return (
-                  <div
-                    key={i}
-                    style={{ width: colGroupWidth }}
-                  >
-                    <div style={{ display: 'flex',flexDirection:'row', justifyContent: "center", alignItems: "center", gap: "6px" }}>
-                      <p
-                        className='elemento-elemento-OF'
-                        style={{ width: subColWidth,textAlign:'center',margin:0 }}
-                      >
+                  <div key={i} className="columna-material">
+                    <div style={{ display: "flex", width: "100%" }}>
+                      {/* Valor teórico */}
+                      <p className="elemento-elemento-OF subcolumna">
                         {mat[key] ?? "-"}
                       </p>
+
+                      {/* Valor real con posible alerta visual */}
                       <p
-                        className={`elemento-elemento-OF ${isAlert ? 'alert-real' : ''}`}
-                        style={{
-                          width: subColWidth,
-                          textAlign: 'center',
-                          margin: 0,
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          gap: '6px',
-                        }}
+                        className={`elemento-elemento-OF subcolumna ${isAlert ? "alert-real" : ""}`}
                         title={isAlert ? `Real supera teórico en más de ${ALERT_THRESHOLD * 100}%` : ""}
                       >
                         {mat[realKey] ?? "-"}
-                        {isAlert && <span className="alert-icon" title="¡Atención! Valor real alto.">!</span>}
+                        {/* Si hay alerta, mostramos un icono de exclamación */}
+                        {isAlert && (
+                          <span className="alert-icon" title="¡Atención! Valor real alto.">!</span>
+                        )}
                       </p>
                     </div>
                   </div>
@@ -138,6 +134,7 @@ export default function ContainerOFMat({ OF_Mat }) {
             </li>
           ))
         ) : (
+          // Si no hay datos, mensaje informativo
           <p style={{ textAlign: "center" }}>No hay materiales cargados.</p>
         )}
       </ul>
