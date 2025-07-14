@@ -36,7 +36,7 @@ export default function ContainerOFLanzadas({ OF_Lanzadas }) {
     <>
       {/* Título principal centrado */}
       <div>
-        <p className='elemento-cabecera' style={{ textAlign: "center", width: widths.titulo }}>
+        <p className='Titulo-tabla' style={{ textAlign: "center", width: widths.titulo }}>
           ORDENES DE PRODUCCIÓN LANZADAS
         </p>
         <hr className='separador' /> {/* Línea separadora */}
