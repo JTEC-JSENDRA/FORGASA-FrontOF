@@ -48,6 +48,7 @@
 
 /* Contenedores flex para filas y cabecera */
 .cabecera-tabla,
+.cabecera-tabla-umbral,
 .elemento-OF {
   display: flex;
   align-items: center;
@@ -64,6 +65,15 @@
 
 .cabecera-tabla {
   background-color: var(--Naranja);
+  color: var(--Negro);
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 5px 5px 0 0;
+  border-bottom: 2px solid var(--NaranjaOscuro);
+}
+
+.cabecera-tabla-umbral {
+  background-color: transparent;
   color: var(--Negro);
   font-weight: 700;
   font-size: 1rem;
@@ -245,6 +255,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.columna-material-umbral input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 2px 4px;
+  font-size: 0.75rem;
+  background-color: white;
+  color: #333;
+  outline: none;
 }
 
 .subcolumna {

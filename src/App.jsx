@@ -209,7 +209,7 @@ function App() {
     fetch("http://localhost:7248/api/Lanzadas/OF_Finalizadas")
       .then(res => res.json())
       .then(data => {
-        console.log("OF_Finalizadas desde backend:", data);
+        //console.log("OF_Finalizadas desde backend:", data);
         setOF_Finalizadas(data);
       })
       .catch(err => console.error("Error al obtener OF Finalizadas", err));
