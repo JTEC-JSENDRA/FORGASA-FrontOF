@@ -55,7 +55,7 @@ function App() {
     setLoadingOF(true);
     setErrorOF(null);
     try {
-      const response = await fetch(`http://localhost:7248/api/Lanzadas/OF/${inputOF}`);
+      const response = await fetch(`https://192.168.8.2:446/api/Lanzadas/OF/${inputOF}`);
       if (!response.ok) throw new Error("Error en la búsqueda de la OF");
 
       const data = await response.json();
@@ -71,7 +71,7 @@ function App() {
 
   // 🔁 Carga las OF liberadas desde el backend
   const fetchLiberadas = () => {
-    fetch("http://localhost:7248/api/Liberadas/FO01")
+    fetch("https://192.168.8.2:446/api/Liberadas/FO01")
       .then(res => {
         if (!res.ok) throw new Error("Network response was not ok");
         return res.json();
@@ -88,7 +88,7 @@ function App() {
 
    // 🔁 Llamada que obliga a SAP a refrescar su información (no devuelve datos, solo desencadena)
   const fetchLiberadas_SAP = () => {
-    fetch("http://localhost:7248/api/Liberadas/SAP/FO01")
+    fetch("https://192.168.8.2:446/api/Liberadas/SAP/FO01")
       .then(res => {
         if (!res.ok) throw new Error("Network response was not ok");
       })
@@ -144,11 +144,12 @@ function App() {
     return () => clearTimeout(interval);
   }, [Refrescar]);
 
-
+  // Hay que ver si aqui estan todas las OF 
+  
   // 🚀 Enviar (lanzar) una OF al backend mediante POST
   const LanzarOF = async (Datos) => {
     try {
-      const response = await fetch("http://localhost:7248/api/Liberadas", {
+      const response = await fetch("https://192.168.8.2:446/api/Liberadas", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(Datos),
@@ -182,7 +183,7 @@ function App() {
 
   // 🔁 Re-cargar OF Lanzadas, Materiales Teóricos/Reales y Finalizadas cada vez que se lanza o refresca
   useEffect(() => {
-    fetch("http://localhost:7248/api/Lanzadas")
+    fetch("https://192.168.8.2:446/api/Lanzadas")
       .then(res => res.json())
       .then(data => {
         //console.log("Datos recibidos - OF Lanzadas:", data);
@@ -192,21 +193,21 @@ function App() {
   }, [Lanzar, Refrescar]);
 
   useEffect(() => {
-    fetch("http://localhost:7248/api/Lanzadas/MateriasPorOrden")
+    fetch("https://192.168.8.2:446/api/Lanzadas/MateriasPorOrden")
       .then(res => res.json())
       .then(data => setOF_Mat(data))
       .catch(err => console.error("Error al obtener materiales teóricos:", err));
   }, [Lanzar, Refrescar]);
 
   useEffect(() => {
-    fetch("http://localhost:7248/api/Lanzadas/MateriasPorOrdenReales")
+    fetch("https://192.168.8.2:446/api/Lanzadas/MateriasPorOrdenReales")
       .then(res => res.json())
       .then(data => setOF_MatReales(data))
       .catch(err => console.error("Error al obtener materiales reales:", err));
   }, [Lanzar, Refrescar]);
 
   useEffect(() => {
-    fetch("http://localhost:7248/api/Lanzadas/OF_Finalizadas")
+    fetch("https://192.168.8.2:446/api/Lanzadas/OF_Finalizadas")
       .then(res => res.json())
       .then(data => {
         //console.log("OF_Finalizadas desde backend:", data);

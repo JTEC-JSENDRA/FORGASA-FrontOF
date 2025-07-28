@@ -66,7 +66,7 @@ export default function ContainerOF({ OF_Liberadas, OF_Lanzadas, LanzarOF }) {
                 // Efecto para obtener versiones al cambiar la receta
                 useEffect(() => {
                   if (recetaSeleccionada) {
-                    fetch(`http://localhost:7248/api/Liberadas/obtenerVersionesReceta?receta=${recetaSeleccionada}`)
+                    fetch(`https://192.168.8.2:446/api/Liberadas/obtenerVersionesReceta?receta=${recetaSeleccionada}`)
                       .then(res => res.ok ? res.text() : Promise.reject(`HTTP ${res.status}`))
                       .then(text => JSON.parse(text))
                       .then(data => setListaVersiones(data.versiones || []))
