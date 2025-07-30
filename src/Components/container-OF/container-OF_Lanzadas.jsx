@@ -51,7 +51,7 @@ export default function ContainerOFLanzadas({ OF_Lanzadas }) {
           <p className='elemento-cabecera' style={{ width: widths.descripcion }}>Descripción</p><hr className='separador' />
           <p className='elemento-cabecera' style={{ width: widths.receta }}>Receta</p><hr className='separador' />
           <p className='elemento-cabecera' style={{ width: widths.version }}>Versión</p><hr className='separador' />
-          <p className='elemento-cabecera' style={{ width: widths.destino }}>Destino</p><hr clasLanzarOFsName='separador' />
+          <p className='elemento-cabecera' style={{ width: widths.destino }}>Destino</p><hr className='separador' />
           <p className='elemento-cabecera' style={{ width: widths.etapaNombre }}>Nombre Etapa</p><hr className='separador' />
           <p className='elemento-cabecera' style={{ width: widths.etapaNumero }}>Etapa</p><hr className='separador' />
           <p className='elemento-cabecera' style={{ width: widths.estado }}>Estado</p><hr className='separador' />

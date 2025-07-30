@@ -291,6 +291,7 @@ function App() {
 
         <section className='sub-main'>
           <section className='sub-container'>
+          {console.log('combinedMat:', combinedMat)}
             <OFMat OF_Mat={combinedMat} />
           </section>
         </section>
